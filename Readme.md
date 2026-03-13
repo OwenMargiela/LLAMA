@@ -1,6 +1,6 @@
 
 
-# Bloom_lfs — LLAMA Log-Structured Storage
+# Bloom_lfs
 
 A high-performance, latch-free log-structured storage layer built for modern flash storage and multi-core systems.
 
@@ -23,11 +23,11 @@ The project currently implements the **log-structured secondary storage** compon
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    FlushBufferRing                          │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │ Buffer 0 │  │ Buffer 1 │  │ Buffer 2 │  │ Buffer 3 │   │
-│  │  4 KiB   │  │  4 KiB   │  │  4 KiB   │  │  4 KiB   │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-│      ▲                                                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
+│  │ Buffer 0 │  │ Buffer 1 │  │ Buffer 2 │  │ Buffer 3 │     │
+│  │  4 KiB   │  │  4 KiB   │  │  4 KiB   │  │  4 KiB   │     │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘     │
+│      ▲                                                      │
 │      └─── current_buffer (atomic pointer)                   │
 └─────────────────────────────────────────────────────────────┘
                           │
@@ -163,15 +163,6 @@ Handles `io_uring`-backed write dispatch with two operating modes:
 - **Zero-copy** — kernel reads directly from userspace buffers
 - **Polled completions** — no context switch per completion
 
-## Planned Components
-
-The full LLAMA design includes (not yet implemented):
-
-- **Mapping Tables**: Lock-free in-memory index for locating page deltas
-- **Caching Layer**: Physical storage for hot deltas in memory
-- **Recovery Protocol**: Rebuild mapping table after crashes
-
-This repository currently implements the **log-structured secondary storage** foundation.
 
 ## Usage Example
 
@@ -234,23 +225,11 @@ All `unsafe` code is audited and justified:
 
 ## Future Work
 
-- [ ] Implement mapping tables (lock-free hash table)
 - [ ] Add caching layer (LRU eviction policy)
 - [ ] Recovery protocol (replay log from `hi_stable`)
-- [ ] Benchmarking suite (vs. baseline file I/O)
-- [ ] Delta compression (reduce storage overhead)
 - [ ] Remote storage support (networked backing file)
 
 ## References
 
 - **LLAMA Paper**: Lev-Ari et al., "LLAMA: A Cache/Storage Subsystem for Modern Hardware" (VLDB 2013)
-- **io_uring**: Axboe, Jens. "Efficient IO with io_uring" (kernel.dk)
-- **Log-Structured Storage**: Rosenblum & Ousterhout, "The Design and Implementation of a Log-Structured File System" (SOSP 1991)
 
-## License
-
-[Specify your license here]
-
-## Authors
-
-[Specify authors/contributors here]
