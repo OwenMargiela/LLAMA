@@ -224,8 +224,6 @@ All `unsafe` code is audited and justified:
   - **Invariant**: Buffers pinned in memory, flush-in-progress bit prevents reuse
 
 ## Future Work
-
-- [ ] Add caching layer (LRU eviction policy)
 - [ ] Recovery protocol (replay log from `hi_stable`)
 - [ ] Remote storage support (networked backing file)
 
