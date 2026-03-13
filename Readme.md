@@ -171,7 +171,7 @@ use bloom_lfs::log_structured_store::{LogStructuredStore, WriteMode};
 
 // Open store with tail-localized writes (high throughput)
 let store = LogStructuredStore::open_with_behavior(
-    "/var/lib/llama/data.lss",
+    "data.lss",
     WriteMode::TailLocalizedWrites,
 )?;
 
@@ -182,7 +182,7 @@ store.check_async_cque(); // Process completed writes
 
 // For WAL or recovery log, use serialized mode
 let wal = LogStructuredStore::open_with_behavior(
-    "/var/lib/llama/wal.lss",
+    "wal.lss",
     WriteMode::SerializedWrites,
 )?;
 ```
